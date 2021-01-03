@@ -1,18 +1,12 @@
 import React from 'react';
 import {
-  View,
   StyleSheet,
-  Text,
-  Button,
-  Platform,
-  FlatList
 } from 'react-native';
 import {
   CATEGORIES,
-  MEALS
 } from '../data/dummy-data';
-import COLORS from '../constants/Colors';
-import MealItem from '../components/MealItem';
+import {useSelector} from 'react-redux';
+
 import MealList from '../components/MealList';
 
 const CategoryMealscreen = props => {
@@ -24,10 +18,12 @@ const CategoryMealscreen = props => {
     navigation
   } = props;
 
+  const availableMeals = useSelector(state => state.meals.filteredMeals);
+
   const catId = navigation.getParam('categoryId');
   const selectedCategory = CATEGORIES.find((category) => category.id === catId);
 
-  const categoryMeals = MEALS.filter(meal => meal.categoryIds.indexOf(catId) >= 0);
+  const categoryMeals = availableMeals.filter(meal => meal.categoryIds.indexOf(catId) >= 0);
 
 
   const {
